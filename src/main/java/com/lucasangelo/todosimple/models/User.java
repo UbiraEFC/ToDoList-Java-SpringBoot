@@ -7,7 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table(name = User.TABLE_NAME)
@@ -34,6 +36,17 @@ public class User {
     @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
     @Size(groups = {CreateUser.class, UpdateUser.class}, min = 8, max = 60)
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<Task>();
+
+    public List<Task> getTask() {
+        return this.tasks;
+    }
+
+    public void setTask(List<Task> task) {
+        this.tasks = task;
+    }
 
     public User() {
     }
